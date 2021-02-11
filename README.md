@@ -8,3 +8,8 @@
 
 ## CLEAN CONTAINERS
     * docker system prune
+    
+    
+## ENDPOINTS
+    http://localhost:8100/user --> return 'OK'
+    http://localhost:8761 ---> eureka server
