@@ -2,17 +2,35 @@ package com.app;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
 
-    @GetMapping
+    private final UserService userService;
+
+    @GetMapping("/status")
     private String getStatus() {
-        return "OK";
+        return "OK USER SERVICE";
+    }
+
+    @GetMapping("/all")
+    private Flux<User> get() {
+        return userService.get();
+    }
+
+    @PostMapping
+    public Mono<User> add(@RequestBody User user) {
+        return userService.add(user);
+    }
+
+    @GetMapping("/send")
+    private String sendUser() {
+        userService.saveUser();
+        return "USER SEND";
     }
 }

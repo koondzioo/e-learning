@@ -2,6 +2,29 @@ version: '3.8'
 
 services:
 
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    hostname: docker-rabbitmq
+    volumes:
+      - "rabbitmq:/var/lib/rabbitmq/mnesia"
+      - "./definitions.json:/etc/rabbitmq/definitions.json"
+      - "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config"
+    ports:
+      - 5672:5672     # port przez ktory mozemy konfigurowac rabbitmq
+      - 15672:15672   # port poprzez ktory mamy udostepniony web manager
+    networks:
+      - services-network
+
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - "mongodb1:/data/db"
+    networks:
+      - services-network
+
   eureka-server:
     image: eureka-server
     build:
@@ -9,6 +32,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8761:8761"
+    networks:
+      - services-network
 
   user-service:
     image: user-service
@@ -17,5 +42,41 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - eureka-server
+      - rabbitmq
+      - mongodb
     ports:
       - "8100:8100"
+    networks:
+      - services-network
+
+  video-service:
+    image: video-service
+    build:
+      context: ./video-service
+      dockerfile: Dockerfile
+    depends_on:
+      - eureka-server
+      - rabbitmq
+    ports:
+      - "8200:8200"
+    networks:
+      - services-network
+
+  api-gateway:
+    image: api-gateway
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    depends_on:
+      - eureka-server
+    ports:
+      - "8090:8090"
+    networks:
+      - services-network
+
+volumes:
+  rabbitmq:
+  mongodb1:
+
+networks:
+  services-network:

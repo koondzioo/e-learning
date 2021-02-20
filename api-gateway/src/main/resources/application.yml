@@ -1,0 +1,27 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: video-service
+          uri: http://video-service:8200
+          predicates:
+            - Path=/video/**
+        - id: user-service
+          uri: http://user-service:8100
+          predicates:
+            - Path=/user/**
+
+eureka:
+  client:
+    registerWithEureka: true
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER:http://eureka-server:8761/eureka}
+#       defaultZone: http://localhost:8761/eureka
+
+
+

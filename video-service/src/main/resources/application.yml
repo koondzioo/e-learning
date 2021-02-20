@@ -1,19 +1,15 @@
 spring:
   application:
-    name: user-service
+    name: video-service
   rabbitmq:
     host: rabbitmq
     port: 5672
     username: guest
     password: guest
-  data:
-    mongodb:
-      database: users_db
-      host: mongodb
-      port: 27017
+
 
 server:
-  port: 8100
+  port: 8200
 
 eureka:
   client:
@@ -21,3 +17,5 @@ eureka:
     serviceUrl:
       defaultZone: ${EUREKA_SERVER:http://eureka-server:8761/eureka}
 #       defaultZone: http://localhost:8761/eureka
+
+
