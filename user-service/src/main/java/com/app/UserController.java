@@ -9,6 +9,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -20,6 +21,7 @@ public class UserController {
 
     @GetMapping("/all")
     private Flux<User> get() {
+        System.out.println("HELLO HERE");
         return userService.get();
     }
 

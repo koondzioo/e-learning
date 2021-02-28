@@ -6,6 +6,11 @@ spring:
     port: 5672
     username: guest
     password: guest
+  data:
+    mongodb:
+      database: videos_db
+      host: mongodb2
+      port: 27027
 
 
 server:

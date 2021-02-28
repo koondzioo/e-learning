@@ -25,6 +25,16 @@ services:
     networks:
       - services-network
 
+  mongodb2:
+    image: mongo
+    command: mongod --port 27027
+    ports:
+      - 27027:27027
+    volumes:
+      - "mongodb2:/data/db"
+    networks:
+      - services-network
+
   eureka-server:
     image: eureka-server
     build:
@@ -57,6 +67,7 @@ services:
     depends_on:
       - eureka-server
       - rabbitmq
+      - mongodb2
     ports:
       - "8200:8200"
     networks:
@@ -74,9 +85,20 @@ services:
     networks:
       - services-network
 
+  react-app:
+    build:
+      context: ./react-frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    networks:
+      - services-network
+
+
 volumes:
   rabbitmq:
   mongodb1:
+  mongodb2:
 
 networks:
   services-network:
