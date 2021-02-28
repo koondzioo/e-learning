@@ -32,3 +32,6 @@
     http://localhost:15672/
     user: guest
     pw: guest
+
+    ADD REACT ENDPOINT
+    http://localhost:3000/
