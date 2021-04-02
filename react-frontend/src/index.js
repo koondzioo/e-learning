@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from 'react-dom';
-import UsersComponent from "./UsersComponent";
+import FirstComponent from "./FirstComponent";
 
 ReactDOM.render(
-    <UsersComponent/>,
+    <FirstComponent/>,
     document.getElementById('root'));
